@@ -7,21 +7,22 @@ import matplotlib.pyplot as plt
 #input constants
 
 #width of film = 2*a
-a = 50
+a = .1
 #height of air channel on top of film = c
-c = 100
+c = 25.
 #width of channel = b
-b=50
-#mu1
+b= 25./2.
 
-#mu2
-beta = 55
+#beta = mu_lc/mu_air
+
+beta = .2/(18.6*10**(-6))
 
 #number of terms to keep = n
-n=10
+n=100
 lam = b/a
 gam = c/a
-beta = 55
+n=100.
+nList = np.arange(n)
 #define coefficient functions c1234
 def fn(n):
     return 16.*(-1.)**n/(2.*n+1.)**3*np.pi**3
@@ -49,6 +50,18 @@ def u1n(n,y,z,lam,gam,beta):
 
 def u2n(n,y,z,lam,gam,beta):
     return (beta*fn(n) + c3(n,lam,gam,beta)*np.cosh(kn(n)/lam*y)+c4(n,lam,gam,beta)*np.sinh(kn(n)/lam*y))*np.cos(kn(n)*z)
+
+def u1(y,z):
+    return np.sum(u1n(nList, y,z,lam,gam,beta))
+
+def u2(y,z):
+    return np.sum(u2n(nList,y,z,lam,gam,beta))
+
+def u(y,z):
+    if y > 0:
+        return u2(y,z)
+    if y<0:
+        return u1(y,z)
 #Main Program
 
 if __name__ == '__main__':
