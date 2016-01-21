@@ -62,9 +62,7 @@ def c3(n,lam,gam,beta):
     return fn(n)*(top/bot+(1-beta))
 
 def c4(n,lam,gam,beta):
-    top = (beta-beta/np.cosh( kn(n)/lam*gam ) -1.)
-    bot = (1-beta*np.tanh( -kn(n)/lam )*np.tanh( kn(n)/lam*gam ) )
-    return fn(n)*(top/bot)*np.tanh(-kn(n)/lam)*beta
+    return beta*c2(n,lam,gam,beta)
 
 def u1n(n,y,z,lam,gam,beta):
     #return (fn(n) + c1(n,lam,gam,beta)*np.cosh(kn(n)/lam*y)+c2(n,lam,gam,beta)*np.sinh(kn(n)/lam*y))*np.cos(kn(n)*z)
